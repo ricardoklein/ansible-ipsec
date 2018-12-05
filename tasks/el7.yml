@@ -1,0 +1,56 @@
+---
+# tasks file
+- name: Check nedded variables
+  fail:
+    msg: "You need to set at least 1 connection"
+  when: ansible_ipsec__conns is undefined
+
+- name: Install LibreSwan Package
+  yum:
+    name: libreswan
+    state: present
+  tag:
+    - install
+
+- name: Configure LibreSwan Tunnels
+  template:
+    src: ipsec.conf.j2
+    dest: /etc/ipsec.d/ipsec.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart_ipsec
+  tags:
+    - setup
+
+- name: Configure LibreSwan Secrets
+  template:
+    src: ipsec.secrets.j2
+    dest: /etc/ipsec.secrets
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart_ipsec
+  tags:
+    - setup
+
+#- name: Setup Connections
+#  template:
+#    src: conn.j2
+#    dest: /etc/ipsec.d/{{ item.name }}.conf
+#    owner: root
+#    group: root
+#    mode: 0644
+#  with_items:
+#    - "{{ ansible_ipsec__conns }}"
+#  notify: restart_ipsec
+#  tags:
+#    - setup
+
+- name: Ensure ipsec service is set to start on boot and is runign
+  systemd:
+    name: ipsec
+    enabled: yes
+    state: started
+  tags:
+    - setup

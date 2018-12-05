@@ -1,0 +1,15 @@
+
+#
+# ANSIBLE MANAGED FILE
+# DO NOT EDIT BY HAND!!!
+#
+
+{% for conn,options in ansible_ipsec__conns.iteritems() %}
+conn {{conn}}
+{%   for k,v in options.iteritems() %}
+{% if k != 'secret' %}
+  {{k}}={{v}}
+{% endif %}
+{%   endfor %}
+
+{%   endfor %}

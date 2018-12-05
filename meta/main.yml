@@ -1,0 +1,16 @@
+galaxy_info:
+  author: Ricardo Felipe Klein
+  description: Role to install and configure ipsec (LibreSwan)
+  company: N/A
+
+  license: GPLv3
+
+  min_ansible_version: 2.7
+  #github_branch:
+  platforms:
+  - name: EL
+    versions:
+    - 7
+  galaxy_tags:
+    - ipsec
+    - libreswan
