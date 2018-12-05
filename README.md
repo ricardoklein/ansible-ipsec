@@ -16,7 +16,12 @@ Role Variables
 --------------
 
 Almost everything is setup by defaults/main.yml (you can check there).
-But you need to set at least 1 connection (there is a fake one in defaults/main.yml.
+But you need to set at least 1 connection (there is a fake one in 
+defaults/main.yml.
+
+Be very carefull with values, Ansible will change yes/no to True/False and will 
+try to interpret things with {} like 'subnets' ipsec option. Trust me, I lost
+a few hours before discover that that was my problem, check my defaults file.
 
 Dependencies
 ------------

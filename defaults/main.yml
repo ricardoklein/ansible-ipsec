@@ -1,21 +1,22 @@
 ---
 
 # For default vault password it was used '123', just to be a real example
+# Remember to put "yes"/"no"/values with {} inside single quotes, or Ansible will change it for True/False and ipsec will not start (yeah, lost few hours to see that)
 
 ansible_ipsec__conns:
   conn1:
     auto: start
     authby: secret
     lifetime: 3600s
-    forceencaps: yes
+    forceencaps: 'yes'
     phase2: esp
     right: 10.1.0.1
-    rightsubnets: '{ 10.0.0.1/25 }'
+    rightsubnets: '{ 172.20.148.0/25 }'
     leftid: 192.168.2.27
     left: 192.168.2.27
-    leftsubnets: '{ 192.168.2.27/24 }'
+    leftsubnets: '{ 172.22.2.240/29 }'
     leftsourceip: 192.168.2.27
-    pfs: no
+    pfs: 'no'
     dpdaction: restart
     dpddelay: 30
     dpdtimeout: 120
@@ -30,15 +31,15 @@ ansible_ipsec__conns:
     auto: start
     authby: secret
     lifetime: 3600s
-    forceencaps: yes
+    forceencaps: 'yes'
     phase2: esp
-    right: 10.2.0.2
-    rightsubnets: '{ 10.0.0.2/25 }'
+    right: 10.2.0.1
+    rightsubnets: '{ 172.20.149.0/25 172.20.150.0/25 }'
     leftid: 192.168.2.27
     left: 192.168.2.27
-    leftsubnets: '{ 192.168.2.27/24 }'
+    leftsubnets: '{ 172.22.2.240/29 }'
     leftsourceip: 192.168.2.27
-    pfs: no
+    pfs: 'no'
     dpdaction: restart
     dpddelay: 30
     dpdtimeout: 120
