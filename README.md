@@ -36,7 +36,7 @@ Example Playbook
 ```
     - hosts: all
       roles:
-         - { role: kleinstuff.ipsec}
+         - { role: kleinstuff.ansible_ipsec }
       vars:
          ansible_ipsec__conns:
            ipsec_conn_1_name:
