@@ -9,7 +9,7 @@
   yum:
     name: libreswan
     state: present
-  tag:
+  tags:
     - install
 
 - name: Configure LibreSwan Tunnels
@@ -47,7 +47,7 @@
 #  tags:
 #    - setup
 
-- name: Ensure ipsec service is set to start on boot and is runign
+- name: Ensure ipsec service is set to start on boot and running
   systemd:
     name: ipsec
     enabled: yes

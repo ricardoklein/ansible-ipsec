@@ -1,12 +1,11 @@
-
 #
 # ANSIBLE MANAGED FILE
 # DO NOT EDIT BY HAND!!!
 #
 
-{% for conn,options in ansible_ipsec__conns.iteritems() %}
+{% for conn,options in ansible_ipsec__conns.items() %}
 conn {{conn}}
-{%   for k,v in options.iteritems()|shuffle %}
+{%   for k,v in options.items()|shuffle %}
 {% if k != 'secret' %}
   {{k}}={{v}}
 {% endif %}
