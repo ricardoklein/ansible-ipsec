@@ -1,0 +1,11 @@
+---
+- name: Set Sysctl paramters
+  sysctl:
+    name: "{{ item.name }}"
+    value: "{{ item.value }}"
+    state: present
+    reload: yes
+    sysctl_file: /etc/sysctl.d/01-ipsec.conf
+  with_items:
+    - "{{ sysctl_params }}"
+

@@ -1,0 +1,48 @@
+---
+
+sysctl_params:
+  - { name: "net.ipv4.ip_forward", value: "1" }
+  - { name: "net.ipv4.conf.all.accept_redirects", value: "0" }
+  - { name: "net.ipv4.conf.default.accept_redirects", value: "0" }
+  - { name: "net.ipv4.conf.all.send_redirects", value: "0" }
+  - { name: "net.ipv4.conf.default.send_redirects", value: "0" }
+  - { name: "net.ipv4.conf.all.rp_filter", value: "0" }
+  - { name: "net.ipv4.conf.default.rp_filter", value: "0" }
+  - { name: "net.ipv4.conf.lo.rp_filter", value: "0" }
+
+# For default vault password it was used '123', just to be a real example
+# Remember to put "yes"/"no"/values with {} inside single quotes, or Ansible will change it for True/False and ipsec will not start (yeah, lost few hours to see that)
+# To create this inline vault secret, you need to do:
+  # echo -ne 'supersecret' | ansible-vault encrypt_string  --ask-vault-pass --stdin-name 'secret'
+  # This needs to be this way, so we do not add extra line breakers at the end of the string
+
+#
+# Example config for your ipsec server (put this in your host_vars)
+# You can add any connections you want.
+#
+
+#ansible_ipsec__conns:
+#  ipsec_conn_1_name:
+#    dpdaction: restart
+#    dpdtimeout: 120
+#    pfs: 'no'
+#    authby: secret
+#    lifetime: 3600s
+#    dpddelay: 30
+#    auto: start
+#    aggressive: 'yes'
+#    ike: aes256-sha1;modp2048
+#    leftid: OUR PUBLIC IP (set here the elastic IP if you are using an AWS EC2)
+#    left: OUR LOCAL IP (can be the same as the public)
+#    leftsubnets: '{ OUR SUBNETS }'
+#    right: THE OTHER SIDE PUBLIC IP
+#    rightsubnets: '{ THE OTHER SIDE SUBNETS }'
+#    secret: !vault |
+#          $ANSIBLE_VAULT;1.1;AES256
+#          32633463653339363465616363346363363330313336386563326638343366653934353333346331
+#          3533333038343332356632656166616339383637373039380a303431323635653634343339363831
+#          37663664616133396237363531336435306537376632396362663662613134386336336665313838
+#          6632396236376439620a363264643661396165363538343466303061623762336162643333373462
+#          6636
+#  ipsec_conn_2_name:
+#    ...
