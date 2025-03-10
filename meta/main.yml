@@ -1,16 +1,17 @@
 galaxy_info:
-  author: Ricardo Felipe Klein
-  description: Role to install and configure ipsec (LibreSwan)
-  company: N/A
-
+  role_name: ansible-strongswan
+  author: Ricardo Klein
+  description: Setup StrongSwan ipsec connection
   license: GPLv3
-
-  min_ansible_version: 2.7
-  #github_branch:
+  min_ansible_version: "2.15"
   platforms:
-  - name: EL
-    versions:
-    - 7
+    - name: opensuse
+      versions:
+        - "15.5"
+    - name: SLES
+      versions:
+        - "15"
   galaxy_tags:
     - ipsec
-    - libreswan
+    - strongswan
+dependencies: []

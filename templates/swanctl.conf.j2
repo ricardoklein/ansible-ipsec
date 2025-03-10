@@ -1,0 +1,50 @@
+#
+# ANSIBLE MANAGED FILE
+# DO NOT EDIT BY HAND!!!
+#
+
+# IKE preshared secret section for a specific secret.
+secrets {
+{% for conn,options in ansible_ipsec__conns.items() %}
+  {{ options.name }} {
+      id-1a  = {{ options.left   }}
+      id-1b  = {{ options.right  }}
+      secret = {{ options.secret }}
+  }
+{%   endfor %}
+
+}
+
+# CONNECTIONS
+connections {
+{% for conn,options in ansible_ipsec__conns.items() %}
+     {{ options.name }} {
+      local_addrs  = {{ options.left }}
+      remote_addrs = {{ options.right }}
+      vips         = {{ options.virtual_ip }}
+      version      = {{ options.ike_version }}
+      proposals    = {{ options.ike_proposals }}
+      mobike       = no
+      reauth_time  = {{ options.reauth_time }}
+      dpd_delay    = {{ options.dpd_delay }}
+ 
+      local {
+          auth = psk
+          id = {{ options.left }}
+      }
+      remote {
+          auth = psk
+          id = {{ options.right }}
+      }
+      children {
+          {{ options.name }}-net {
+              local_ts      = {{ options.local_ts }}
+              remote_ts     = {{ options.remote_ts }}
+              esp_proposals = {{ options.esp_proposals }}
+              life_time     = {{ options.life_time }}
+              start_action  = {{ options.start_action }}
+          }
+      }
+    }
+{%   endfor %}
+}

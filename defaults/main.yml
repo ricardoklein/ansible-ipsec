@@ -1,15 +1,5 @@
 ---
 
-sysctl_params:
-  - { name: "net.ipv4.ip_forward", value: "1" }
-  - { name: "net.ipv4.conf.all.accept_redirects", value: "0" }
-  - { name: "net.ipv4.conf.default.accept_redirects", value: "0" }
-  - { name: "net.ipv4.conf.all.send_redirects", value: "0" }
-  - { name: "net.ipv4.conf.default.send_redirects", value: "0" }
-  - { name: "net.ipv4.conf.all.rp_filter", value: "0" }
-  - { name: "net.ipv4.conf.default.rp_filter", value: "0" }
-  - { name: "net.ipv4.conf.lo.rp_filter", value: "0" }
-
 # For default vault password it was used '123', just to be a real example
 # Remember to put "yes"/"no"/values with {} inside single quotes, or Ansible will change it for True/False and ipsec will not start (yeah, lost few hours to see that)
 # To create this inline vault secret, you need to do:
@@ -23,20 +13,22 @@ sysctl_params:
 
 #ansible_ipsec__conns:
 #  ipsec_conn_1_name:
-#    dpdaction: restart
-#    dpdtimeout: 120
-#    pfs: 'no'
-#    authby: secret
-#    lifetime: 3600s
-#    dpddelay: 30
-#    auto: start
-#    aggressive: 'yes'
-#    ike: aes256-sha1;modp2048
 #    leftid: OUR PUBLIC IP (set here the elastic IP if you are using an AWS EC2)
 #    left: OUR LOCAL IP (can be the same as the public)
 #    leftsubnets: '{ OUR SUBNETS }'
 #    right: THE OTHER SIDE PUBLIC IP
 #    rightsubnets: '{ THE OTHER SIDE SUBNETS }'
+#    virtual_ip: 192.168.88.1 # '{ The virtual ip of this machine in the tunnel }'
+#    name : conn01
+#    ike_version: 1
+#    ike_proposals: aes256-sha256-modp1536
+#    reauth_time: 86400s
+#    dpd_delay: 120s
+#    local_ts: 192.168.88.0/30           # tunnel internal network for left  - routing
+#    remote_ts: 10.1.1.1/32,10.2.2.0/24  # tunnel internal network for right - routing
+#    esp_proposals: aes256-sha-256-modp1536 # usualy esp and ike proposals are the same
+#    life_time: 28800s    # child lifetime
+#    start_action: start  # always auto-start the tunnel
 #    secret: !vault |
 #          $ANSIBLE_VAULT;1.1;AES256
 #          32633463653339363465616363346363363330313336386563326638343366653934353333346331

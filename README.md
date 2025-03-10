@@ -1,21 +1,28 @@
 ANSIBLE IPSEC
 =========
 
-Install ipsec (LibreSwan)/
+This role installs StrongSwan on a single "client" with simple pre-shared key auth.
+
+This role does not set any Firewall rules.
+
+This role does not set any packet forwarding, so if you need to setup a site-to-site 
+connection, you need extra effort. This could be done by this role, if you need it,
+feel free to pay a coffee and I may do it ;-).
+
 Currently supports:
-* CentOS/RHEL 7
+* openSUSE Leap 15
 
 Requirements
 ------------
 
-We are not setting any iptables rules here, if you need any, use another role for that.
+
 
 Role Variables
 --------------
 
 Almost everything is setup by defaults/main.yml (you can check there).
 But you need to set at least 1 connection (there is a fake one in 
-defaults/main.yml.
+defaults/main.yml so you can see how it works).
 
 Be very carefull with values, Ansible will change yes/no to True/False and will 
 try to interpret things with {} like 'subnets' ipsec option. Trust me, I lost
@@ -28,7 +35,6 @@ Create a vault protected secret string for the ipsec secret:
 ```
   echo -ne 'supersecret' | ansible-vault encrypt_string  --ask-vault-pass --stdin-name 'secret'
 ```
-This needs to be done this way, so we do not add extra line breakers at the end of the string
 
 Example Playbook
 ----------------
@@ -62,7 +68,7 @@ Example Playbook
                    6632396236376439620a363264643661396165363538343466303061623762336162643333373462
                    6636
 ```
-You can add as many "ipsec_conns" you need.
+You can add as many "ipsec_conns" as you need.
 
 License
 -------
@@ -73,3 +79,7 @@ Author Information
 ------------------
 
 If you want to suggest changes or request new features, please feel free to create a issue or send a pull request.
+
+If you find this useful, you can help donating Monero:
+
+`86srKqPRnzpLCkihCHJ9ZB8sjg7B1QxBmT7xS6ebsL52JgCSHVsDsTqDCAqQveasfGh95AZei11Dc1fwjwrE42t3QhzHkdm`

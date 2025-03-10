@@ -5,17 +5,17 @@
     msg: "You need to set at least 1 connection"
   when: ansible_ipsec__conns is undefined
 
-- name: Install LibreSwan Package
-  yum:
-    name: libreswan
+- name: Install StrongSwan Package
+  zypper:
+    name: strongswan
     state: present
   tags:
     - install
 
-- name: Configure LibreSwan Tunnels
+- name: Configure StrongSwan.conf
   template:
-    src: ipsec.conf.j2
-    dest: /etc/ipsec.d/ipsec.conf
+    src:  strongswan.conf.j2
+    dest: /etc/strongswan.conf
     owner: root
     group: root
     mode: 0644
@@ -23,33 +23,20 @@
   tags:
     - setup
 
-- name: Configure LibreSwan Secrets
+- name: Configure SwanCTL.conf
   template:
-    src: ipsec.secrets.j2
-    dest: /etc/ipsec.secrets
+    src:  swanctl.j2
+    dest: /etc/swanctl/swanctl.conf
     owner: root
     group: root
     mode: 0644
   notify: restart_ipsec
   tags:
     - setup
-
-#- name: Setup Connections
-#  template:
-#    src: conn.j2
-#    dest: /etc/ipsec.d/{{ item.name }}.conf
-#    owner: root
-#    group: root
-#    mode: 0644
-#  with_items:
-#    - "{{ ansible_ipsec__conns }}"
-#  notify: restart_ipsec
-#  tags:
-#    - setup
 
 - name: Ensure ipsec service is set to start on boot and running
   systemd:
-    name: ipsec
+    name: strongswan
     enabled: yes
     state: started
   tags:
