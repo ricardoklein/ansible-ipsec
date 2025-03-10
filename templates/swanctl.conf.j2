@@ -6,7 +6,7 @@
 # IKE preshared secret section for a specific secret.
 secrets {
 {% for conn,options in ansible_ipsec__conns.items() %}
-  {{ options.name }} {
+  ike-1 {
       id-1a  = {{ options.left   }}
       id-1b  = {{ options.right  }}
       secret = {{ options.secret }}
@@ -48,3 +48,6 @@ connections {
     }
 {%   endfor %}
 }
+
+# Include config snippets
+include conf.d/*.conf

@@ -18,18 +18,18 @@
     dest: /etc/strongswan.conf
     owner: root
     group: root
-    mode: 0644
+    mode: 0600
   notify: restart_ipsec
   tags:
     - setup
 
 - name: Configure SwanCTL.conf
   template:
-    src:  swanctl.j2
+    src:  swanctl.conf.j2
     dest: /etc/swanctl/swanctl.conf
     owner: root
     group: root
-    mode: 0644
+    mode: 0600
   notify: restart_ipsec
   tags:
     - setup

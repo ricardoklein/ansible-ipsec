@@ -1,10 +1,15 @@
+#
+# ANSIBLE MANAGED FILE
+# DO NOT EDIT BY HAND!!!
+#
+
 swanctl {
   load = pem pkcs1 revocation constraints pubkey openssl random aes sha1 sha2
 }
 
 charon-systemd {
   load = random nonce openssl pem pkcs1 revocation curl kernel-netlink socket-default updown vici aes sha1 sha2
-  install_virtual_ip_on = {{ install_virtual_ip_on }}
+  install_virtual_ip_on = {{ install_virtual_ip_on | default('eth0')}}
   install_virtual_ip = yes
   install_routes = yes 
   journal {
@@ -13,4 +18,3 @@ charon-systemd {
     knl = 3
   }
 }
-

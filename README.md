@@ -45,12 +45,9 @@ Example Playbook
          - { role: kleinstuff.ansible_ipsec }
       vars:
         ansible_ipsec__conns:
-          ipsec_conn_1_name:
-            leftid: OUR PUBLIC IP (set here the elastic IP if you are using an AWS EC2)
+          ipsec_conn_name:
             left: OUR LOCAL IP (can be the same as the public)
-            leftsubnets: '{ OUR SUBNETS }'
             right: THE OTHER SIDE PUBLIC IP
-            rightsubnets: '{ THE OTHER SIDE SUBNETS }'
             virtual_ip: 192.168.88.1 # '{ The virtual ip of this machine in the tunnel }'
             name : conn01
             ike_version: 1
@@ -59,7 +56,7 @@ Example Playbook
             dpd_delay: 120s
             local_ts: 192.168.88.0/30           # tunnel internal network for left  - routing
             remote_ts: 10.1.1.1/32,10.2.2.0/24  # tunnel internal network for right - routing
-            esp_proposals: aes256-sha-256-modp1536 # usualy esp and ike proposals are the same
+            esp_proposals: aes256-sha256-modp1536 # usualy esp and ike proposals are the same
             life_time: 28800s    # child lifetime
             start_action: start  # always auto-start the tunnel
             secret: !vault |
