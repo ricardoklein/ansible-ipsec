@@ -12,6 +12,25 @@ feel free to pay a coffee and I may do it ;-).
 Currently supports:
 * openSUSE Leap 15
 
+CURRENT ISSUES:
+only works with one connection as I can't figure out why in this section of 
+swanctl.conf:
+
+```
+# IKE preshared secret section for a specific secret.
+secrets {
+  ike-1 {
+      id-1a  = left-ip-addr
+      id-1b  = right-ip-addr
+      secret = some-secret-password
+  }
+```
+
+I can't name the secret anything but `ike-1`.
+I tried to name it `connectionname` and `connnectionname-1`, but then none of
+the SAS come up.
+If you know why, please open an issue and tell me :-)
+
 Requirements
 ------------
 
